@@ -1,3 +1,6 @@
+/*
+ * Names: Chirantan Patel (csp126), Catherine Zhou (czz2)
+ */
 package chess;
 
 import java.util.ArrayList;
@@ -37,6 +40,9 @@ class ReturnPlay {
 public class Chess {
 	
 	enum Player { white, black }
+
+	private static ArrayList<ReturnPiece> initPieces = new ArrayList<>();
+	
 	
 	/**
 	 * Plays the next move for whichever player has the turn.
@@ -62,5 +68,54 @@ public class Chess {
 	 */
 	public static void start() {
 		/* FILL IN THIS METHOD */
+		
+		initPieces.clear();
+        
+        // Initialize pieces here
+		initializePieces();
+
 	}
+
+	/*
+	 * Helper functions
+	 */
+	//Setup board and initialize all pieces
+	private static void initializePieces() {
+        // Initialize White pieces
+        for (ReturnPiece.PieceFile file : ReturnPiece.PieceFile.values()) {
+			//Initialize pawns first
+            initPieces.add(createPiece(ReturnPiece.PieceType.WP, file, 2));
+        }
+        initPieces.add(createPiece(ReturnPiece.PieceType.WR, ReturnPiece.PieceFile.a, 1));
+        initPieces.add(createPiece(ReturnPiece.PieceType.WR, ReturnPiece.PieceFile.h, 1));
+        initPieces.add(createPiece(ReturnPiece.PieceType.WN, ReturnPiece.PieceFile.b, 1));
+        initPieces.add(createPiece(ReturnPiece.PieceType.WN, ReturnPiece.PieceFile.g, 1));
+        initPieces.add(createPiece(ReturnPiece.PieceType.WB, ReturnPiece.PieceFile.c, 1));
+        initPieces.add(createPiece(ReturnPiece.PieceType.WB, ReturnPiece.PieceFile.f, 1));
+        initPieces.add(createPiece(ReturnPiece.PieceType.WQ, ReturnPiece.PieceFile.d, 1));
+        initPieces.add(createPiece(ReturnPiece.PieceType.WK, ReturnPiece.PieceFile.e, 1));
+        
+        // Initialize Black pieces
+        for (ReturnPiece.PieceFile file : ReturnPiece.PieceFile.values()) {
+            initPieces.add(createPiece(ReturnPiece.PieceType.BP, file, 7));
+        }
+        initPieces.add(createPiece(ReturnPiece.PieceType.BR, ReturnPiece.PieceFile.a, 8));
+        initPieces.add(createPiece(ReturnPiece.PieceType.BR, ReturnPiece.PieceFile.h, 8));
+        initPieces.add(createPiece(ReturnPiece.PieceType.BN, ReturnPiece.PieceFile.b, 8));
+        initPieces.add(createPiece(ReturnPiece.PieceType.BN, ReturnPiece.PieceFile.g, 8));
+        initPieces.add(createPiece(ReturnPiece.PieceType.BB, ReturnPiece.PieceFile.c, 8));
+        initPieces.add(createPiece(ReturnPiece.PieceType.BB, ReturnPiece.PieceFile.f, 8));
+        initPieces.add(createPiece(ReturnPiece.PieceType.BQ, ReturnPiece.PieceFile.d, 8));
+        initPieces.add(createPiece(ReturnPiece.PieceType.BK, ReturnPiece.PieceFile.e, 8));
+    }
+	
+    private static ReturnPiece createPiece(ReturnPiece.PieceType type, ReturnPiece.PieceFile file, int rank) {
+        ReturnPiece piece = new ReturnPiece();
+        piece.pieceType = type;
+        piece.pieceFile = file;
+        piece.pieceRank = rank;
+        return piece;
+    }
+
+
 }
