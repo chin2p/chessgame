@@ -56,7 +56,14 @@ public class Chess {
 	public static ReturnPlay play(String move) {
 
 		/* FILL IN THIS METHOD */
-		
+		if (move.length() == 5) {
+			System.out.println("move length 5 (standard move)");
+		} else if (move.length() == 6) {
+			System.out.println("move length 6 (resign)");
+		} else {
+			System.out.println("move length 7+ (draw request)");
+		}
+
 		/* FOLLOWING LINE IS A PLACEHOLDER TO MAKE COMPILER HAPPY */
 		/* WHEN YOU FILL IN THIS METHOD, YOU NEED TO RETURN A ReturnPlay OBJECT */
 		return null;
@@ -70,9 +77,12 @@ public class Chess {
 		/* FILL IN THIS METHOD */
 		
 		initPieces.clear();
-        
+
         // Initialize pieces here
 		initializePieces();
+
+        // Print the board
+		PlayChess.printBoard(initPieces);
 
 	}
 
