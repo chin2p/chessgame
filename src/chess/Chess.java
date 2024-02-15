@@ -41,7 +41,11 @@ public class Chess {
 	
 	enum Player { white, black }
 
+	//var declarations
 	private static ArrayList<ReturnPiece> initPieces = new ArrayList<>();
+
+	private static Player currPlayer = Player.white;
+
 	
 	
 	/**
@@ -59,7 +63,44 @@ public class Chess {
 		
 		/* FOLLOWING LINE IS A PLACEHOLDER TO MAKE COMPILER HAPPY */
 		/* WHEN YOU FILL IN THIS METHOD, YOU NEED TO RETURN A ReturnPlay OBJECT */
-		return null;
+
+		ReturnPlay returnPlay = new ReturnPlay();
+        returnPlay.piecesOnBoard = new ArrayList<>(initPieces);
+		//default to illegal so we can check the move
+        returnPlay.message = ReturnPlay.Message.ILLEGAL_MOVE;
+
+		String[] parts = move.split(" ");
+        if (parts.length != 2){
+			return returnPlay;
+		} 
+
+		ReturnPiece.PieceFile fromFile = ReturnPiece.PieceFile.valueOf(parts[0].substring(0, 1));
+        int fromRank = Integer.parseInt(parts[0].substring(1));
+        ReturnPiece.PieceFile toFile = ReturnPiece.PieceFile.valueOf(parts[1].substring(0, 1));
+        int toRank = Integer.parseInt(parts[1].substring(1));
+
+		for(int i = 0; i < initPieces.size(); i++) {
+			ReturnPiece piece = initPieces.get(i);
+
+			if (piece.pieceFile == fromFile && piece.pieceRank == fromRank) {
+				if (isValidPawnMove(piece, fromFile, fromRank, toFile, toRank)) {
+					piece.pieceFile = toFile;
+					piece.pieceRank = toRank;
+
+
+					//later implement capture mechanics
+					//also promotion mechanics here
+
+					switchPlayer();
+					break;
+				}
+
+
+
+			}
+		}
+
+		return returnPlay;
 	}
 	
 	
@@ -116,6 +157,67 @@ public class Chess {
         piece.pieceRank = rank;
         return piece;
     }
+
+	private static void switchPlayer() {
+        currPlayer = (currPlayer == Player.white) ? Player.black : Player.white;
+    }
+
+
+	private static boolean isValidPawnMove(ReturnPiece piece, ReturnPiece.PieceFile fromFile, int fromRank, ReturnPiece.PieceFile toFile, int toRank) {
+		// Check if the move is forward for white or black pawns
+		int rankChange = toRank - fromRank;
+		boolean isWhite = piece.pieceType == ReturnPiece.PieceType.WP;
+		boolean isBlack = piece.pieceType == ReturnPiece.PieceType.BP;
+		
+		//calculate file change to check for diagonal captures
+		int fileChange = toFile.ordinal() - fromFile.ordinal();
+		
+		if (isWhite) {
+			//check for valid white pawn moves
+			if (rankChange == 1 && fileChange == 0 && !isPieceAt(toFile, toRank)) {
+				//move forward one square
+				return true;
+			} else if (fromRank == 2 && rankChange == 2 && fileChange == 0 && !isPieceAt(toFile, toRank) && !isPieceAt(toFile, 3)) {
+				//move forward two squares from starting position
+				return true;
+			} else if (rankChange == 1 && Math.abs(fileChange) == 1 && isPieceAt(toFile, toRank) && isOpponentPieceAt(toFile, toRank, isWhite)) {
+				//capture diagonally
+				return true;
+			}
+		} else if (isBlack) {
+			//check for valid black pawn moves
+			if (rankChange == -1 && fileChange == 0 && !isPieceAt(toFile, toRank)) {
+				return true;
+			} else if (fromRank == 7 && rankChange == -2 && fileChange == 0 && !isPieceAt(toFile, toRank) && !isPieceAt(toFile, 6)) {
+				return true;
+			} else if (rankChange == -1 && Math.abs(fileChange) == 1 && isPieceAt(toFile, toRank) && isOpponentPieceAt(toFile, toRank, isWhite)) {
+				return true;
+			}
+		}
+	
+		//if none then invalid move
+		return false;
+	}
+	
+	private static boolean isPieceAt(ReturnPiece.PieceFile file, int rank) {
+		//check if there's any piece at the given position
+		for (ReturnPiece piece : initPieces) {
+			if (piece.pieceFile == file && piece.pieceRank == rank) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private static boolean isOpponentPieceAt(ReturnPiece.PieceFile file, int rank, boolean isWhite) {
+		//check if there's an opponent piece at the given position
+		for (ReturnPiece piece : initPieces) {
+			if (piece.pieceFile == file && piece.pieceRank == rank) {
+				return (isWhite && piece.pieceType.toString().startsWith("B")) || (!isWhite && piece.pieceType.toString().startsWith("W"));
+			}
+		}
+		return false;
+	}
 
 
 }
