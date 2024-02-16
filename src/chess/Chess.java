@@ -90,10 +90,9 @@ public class Chess {
 			ReturnPiece piece = initPieces.get(i);
 
 			if (piece.pieceFile == fromFile && piece.pieceRank == fromRank) {
-				if (isValidPawnMove(piece, fromFile, fromRank, toFile, toRank)) {
+				if (isValidPawnMove(piece, fromFile, fromRank, toFile, toRank) || isValidRookMove(piece, fromFile, fromRank, toFile, toRank)) {
 					piece.pieceFile = toFile;
 					piece.pieceRank = toRank;
-
 
 					//later implement capture mechanics
 					//also promotion mechanics here
@@ -226,6 +225,43 @@ public class Chess {
 				return (isWhite && piece.pieceType.toString().startsWith("B")) || (!isWhite && piece.pieceType.toString().startsWith("W"));
 			}
 		}
+		return false;
+	}
+
+	private static boolean isValidRookMove(ReturnPiece piece, ReturnPiece.PieceFile fromFile, int fromRank, ReturnPiece.PieceFile toFile, int toRank) {
+		//know whether piece moves vertically or horizontally
+		int rankChange = toRank - fromRank;
+		int fileChange = toFile.ordinal() - fromFile.ordinal();
+		boolean isWhite = piece.pieceType == ReturnPiece.PieceType.WP;
+		//boolean isBlack = piece.pieceType == ReturnPiece.PieceType.BP;
+		
+		if (rankChange != 0 && fileChange == 0) {
+			//if piece moves vertically
+			if (rankChange < 0) { //piece moves down
+				for (int i = 1; i <= rankChange; i++) {
+					if (isOpponentPieceAt(toFile, toRank - i, isWhite)) {
+						return false;
+					}
+				}
+				return true;
+			} else if (rankChange > 0) { //piece moves up
+				for (int i = 1; i <= rankChange; i++) {
+					if (isOpponentPieceAt(toFile, toRank - i, isWhite)) {
+						return false;
+					}
+				}
+				return true;
+			} else {
+				return false;
+			}
+		} else if (rankChange == 0 && fileChange != 0) {
+			//if piece moves horizontally
+			// still working on this
+		} else {
+			return true;
+		}
+		
+		//if none then invalid move
 		return false;
 	}
 
