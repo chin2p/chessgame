@@ -45,8 +45,6 @@ public class Chess {
 	private static ArrayList<ReturnPiece> initPieces = new ArrayList<>();
 
 	private static Player currPlayer = Player.white;
-
-	
 	
 	/**
 	 * Plays the next move for whichever player has the turn.
@@ -103,14 +101,11 @@ public class Chess {
 					break;
 				}
 
-
-
 			}
 		}
 
 		return returnPlay;
 	}
-	
 	
 	/**
 	 * This method should reset the game, and start from scratch.
@@ -172,54 +167,5 @@ public class Chess {
 	private static void switchPlayer() {
         currPlayer = (currPlayer == Player.white) ? Player.black : Player.white;
     }
-
-	
-	private static boolean isOpponentPieceAt(ReturnPiece.PieceFile file, int rank, boolean isWhite) {
-		//check if there's an opponent piece at the given position
-		for (ReturnPiece piece : initPieces) {
-			if (piece.pieceFile == file && piece.pieceRank == rank) {
-				return (isWhite && piece.pieceType.toString().startsWith("B")) || (!isWhite && piece.pieceType.toString().startsWith("W"));
-			}
-		}
-		return false;
-	}
-
-	private static boolean isValidRookMove(ReturnPiece piece, ReturnPiece.PieceFile fromFile, int fromRank, ReturnPiece.PieceFile toFile, int toRank) {
-		//know whether piece moves vertically or horizontally
-		int rankChange = toRank - fromRank;
-		int fileChange = toFile.ordinal() - fromFile.ordinal();
-		boolean isWhite = piece.pieceType == ReturnPiece.PieceType.WP;
-		//boolean isBlack = piece.pieceType == ReturnPiece.PieceType.BP;
-		
-		if (rankChange != 0 && fileChange == 0) {
-			//if piece moves vertically
-			if (rankChange < 0) { //piece moves down
-				for (int i = 1; i <= rankChange; i++) {
-					if (isOpponentPieceAt(toFile, toRank - i, isWhite)) {
-						return false;
-					}
-				}
-				return true;
-			} else if (rankChange > 0) { //piece moves up
-				for (int i = 1; i <= rankChange; i++) {
-					if (isOpponentPieceAt(toFile, toRank - i, isWhite)) {
-						return false;
-					}
-				}
-				return true;
-			} else {
-				return false;
-			}
-		} else if (rankChange == 0 && fileChange != 0) {
-			//if piece moves horizontally
-			// still working on this
-		} else {
-			return true;
-		}
-		
-		//if none then invalid move
-		return false;
-	}
-
 
 }
