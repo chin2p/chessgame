@@ -20,6 +20,7 @@ public class Rook {
 					if (isOpponentPieceAt(toFile, toRank - i, piece.pieceType.toString().startsWith("W"), pieces)) {
 						return false;
 					}
+                    
 				}
 				return true;
 			} else if (rankChange > 0) { //piece moves up
@@ -35,9 +36,13 @@ public class Rook {
 		} else if (rankChange == 0 && fileChange != 0) {
 			//if piece moves horizontally
 			// still working on this
-		} else {
-			return true;
-		}
+		} else if (rankChange !=0 && fileChange != 0) {
+            //if piece moves, but not like a rook
+			return false;
+		} else if (rankChange == 0 && fileChange == 0) {
+            //if piece doesn't move
+            return false;
+        }
 		
 		//if none then invalid move
 		return false;
