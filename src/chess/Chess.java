@@ -90,7 +90,9 @@ public class Chess {
 			ReturnPiece piece = initPieces.get(i);
 
 			if (piece.pieceFile == fromFile && piece.pieceRank == fromRank) {
-				if ((Pawn.isValidPawnMove(piece, fromFile, fromRank, toFile, toRank, initPieces)) || isValidRookMove(piece, fromFile, fromRank, toFile, toRank)) {
+				if ((Pawn.isValidPawnMove(piece, fromFile, fromRank, toFile, toRank, initPieces)) || isValidRookMove(piece, fromFile, fromRank, toFile, toRank) || (Knight.isValidKnightMove(piece, fromFile, fromRank, toFile, toRank, initPieces))
+				 || (Bishop.isValidBishopMove(piece, fromFile, fromRank, toFile, toRank, initPieces)) || (Queen.isValidQueenMove(piece, fromFile, fromRank, toFile, toRank, initPieces)) 
+				 || (King.isValidKingMove(piece, fromFile, fromRank, toFile, toRank, initPieces))) {
 					piece.pieceFile = toFile;
 					piece.pieceRank = toRank;
 
