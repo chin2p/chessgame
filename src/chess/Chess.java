@@ -139,6 +139,38 @@ public class Chess {
 
 					
 					//also promotion mechanics here
+					if ((piece.pieceType == ReturnPiece.PieceType.BP || piece.pieceType == ReturnPiece.PieceType.WP) && (toRank == 8 || toRank == 1)) {
+						if (move.length() < 7 || move.substring(6, 1) == "Q") {
+							//promote to queen
+							if (piece.pieceType == ReturnPiece.PieceType.BP) {
+								piece.pieceType = ReturnPiece.PieceType.BQ;
+							} else if (piece.pieceType == ReturnPiece.PieceType.WP) {
+								piece.pieceType = ReturnPiece.PieceType.WQ;
+							}
+						} else if (move.substring(6, 1) == "N") {
+							//promote to knight
+							if (piece.pieceType == ReturnPiece.PieceType.BP) {
+								piece.pieceType = ReturnPiece.PieceType.BN;
+							} else if (piece.pieceType == ReturnPiece.PieceType.WP) {
+								piece.pieceType = ReturnPiece.PieceType.WN;
+							}
+						} else if (move.substring(6, 1) == "B") {
+							//promote to bishop
+							if (piece.pieceType == ReturnPiece.PieceType.BP) {
+								piece.pieceType = ReturnPiece.PieceType.BB;
+							} else if (piece.pieceType == ReturnPiece.PieceType.WP) {
+								piece.pieceType = ReturnPiece.PieceType.WB;
+							}
+						} else if (move.substring(6, 1) == "R") {
+							//promote to rook
+							if (piece.pieceType == ReturnPiece.PieceType.BP) {
+								piece.pieceType = ReturnPiece.PieceType.BR;
+							} else if (piece.pieceType == ReturnPiece.PieceType.WP) {
+								piece.pieceType = ReturnPiece.PieceType.WR;
+							}
+						}
+						//else, it's an illegal move
+					}
 
 					switchPlayer();
 					break;
