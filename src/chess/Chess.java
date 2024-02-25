@@ -45,6 +45,12 @@ public class Chess {
 	private static ArrayList<ReturnPiece> initPieces = new ArrayList<>();
 
 	private static Player currPlayer = Player.white;
+
+	// Fields to track the last pawn move for en passant
+    public static ReturnPiece.PieceFile lastPawnFile = null;
+    public static int lastPawnRank = -1;
+    public static boolean lastMoveWasDoublePawnStep = false;
+
 	
 	/**
 	 * Plays the next move for whichever player has the turn.
@@ -89,7 +95,22 @@ public class Chess {
 				 || (Bishop.isValidBishopMove(piece, fromFile, fromRank, toFile, toRank, initPieces)) || (Queen.isValidQueenMove(piece, fromFile, fromRank, toFile, toRank, initPieces)) 
 				 || (King.isValidKingMove(piece, fromFile, fromRank, toFile, toRank, initPieces))) {
 
-					// Check and handle capture
+					// En Passant capture check
+					if (Math.abs(fromFile.ordinal() - toFile.ordinal()) == 1 && 
+					((piece.pieceType == ReturnPiece.PieceType.WP && toRank == 6) || 
+					 (piece.pieceType == ReturnPiece.PieceType.BP && toRank == 3))) {
+						// Check if last move was a double pawn step and the move is en passant
+						if (lastMoveWasDoublePawnStep && lastPawnFile == toFile && 
+							((piece.pieceType == ReturnPiece.PieceType.WP && lastPawnRank == 5) || 
+							(piece.pieceType == ReturnPiece.PieceType.BP && lastPawnRank == 4))) {
+							int capturedPawnIndex = findPieceIndexAtPosition(initPieces, toFile, lastPawnRank);
+							if (capturedPawnIndex != -1) {
+								initPieces.remove(capturedPawnIndex);
+							}
+						}
+					}
+
+					// Check and handle regular captures
 					for (int j = 0; j < initPieces.size(); j++) {
 						ReturnPiece targetPiece = initPieces.get(j);
 						if (targetPiece.pieceFile == toFile && targetPiece.pieceRank == toRank && !targetPiece.equals(piece)) {
@@ -103,7 +124,20 @@ public class Chess {
 					piece.pieceFile = toFile;
 					piece.pieceRank = toRank;
 
-					//later implement capture mechanics
+					// Update lastMoveWasDoublePawnStep for the next move
+					if (piece.pieceType == ReturnPiece.PieceType.WP && fromRank == 2 && toRank == 4) {
+						lastPawnFile = fromFile;
+						lastPawnRank = toRank;
+						lastMoveWasDoublePawnStep = true;
+					} else if (piece.pieceType == ReturnPiece.PieceType.BP && fromRank == 7 && toRank == 5) {
+						lastPawnFile = fromFile;
+						lastPawnRank = toRank;
+						lastMoveWasDoublePawnStep = true;
+					} else {
+						lastMoveWasDoublePawnStep = false;
+					}
+
+					
 					//also promotion mechanics here
 
 					switchPlayer();
@@ -176,5 +210,17 @@ public class Chess {
 	private static void switchPlayer() {
         currPlayer = (currPlayer == Player.white) ? Player.black : Player.white;
     }
+
+	//for en passant capture
+	private static int findPieceIndexAtPosition(ArrayList<ReturnPiece> pieces, ReturnPiece.PieceFile file, int rank) {
+		for (int i = 0; i < pieces.size(); i++) {
+			ReturnPiece piece = pieces.get(i);
+			if (piece.pieceFile == file && piece.pieceRank == rank) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
 
 }
