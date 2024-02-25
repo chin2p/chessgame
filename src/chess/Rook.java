@@ -20,14 +20,19 @@ public class Rook {
 					if (isOpponentPieceAt(toFile, toRank - i, piece.pieceType.toString().startsWith("W"), pieces)) {
 						return false;
 					}
-                    
+                    if (isPieceAt(toFile, toRank, pieces)) {
+                        return false;
+                    }
 				}
 				return true;
 			} else if (rankChange > 0) { //piece moves up
 				for (int i = 1; i <= rankChange; i++) {
-					if (isOpponentPieceAt(toFile, toRank - i, piece.pieceType.toString().startsWith("W"), pieces)) {
+					if (isOpponentPieceAt(toFile, toRank + i, piece.pieceType.toString().startsWith("W"), pieces)) {
 						return false;
 					}
+                    if (isPieceAt(toFile, toRank, pieces)) {
+                        return false;
+                    }
 				}
 				return true;
 			} else {
@@ -35,7 +40,28 @@ public class Rook {
 			}
 		} else if (rankChange == 0 && fileChange != 0) {
 			//if piece moves horizontally
-			// still working on this
+            if (fileChange < 0) {
+                for (int i = 1; i <= fileChange; i++) {
+					if (isOpponentPieceAt(toFile.ordinal() - 1, toRank, piece.pieceType.toString().startsWith("W"), pieces)) {
+						return false;
+					}
+                    if (isPieceAt(toFile, toRank, pieces)) {
+                        return false;
+                    }
+                }
+            } else if (fileChange > 0) { //piece moves up
+				for (int i = 1; i <= fileChange; i++) {
+					if (isOpponentPieceAt(toFile.ordinal() + i, toRank, piece.pieceType.toString().startsWith("W"), pieces)) {
+						return false;
+					}
+                    if (isPieceAt(toFile, toRank, pieces)) {
+                        return false;
+                    }
+				}
+				return true;
+			} else {
+				return false;
+			}
 		} else if (rankChange !=0 && fileChange != 0) {
             //if piece moves, but not like a rook
 			return false;
