@@ -49,6 +49,7 @@ public class Rook {
                         return false;
                     }
                 }
+				return true;
             } else if (fileChange > 0) { //piece moves up
 				for (int i = 1; i <= fileChange; i++) {
 					if (isOpponentPieceAt(toFile.ordinal() + i, toRank, piece.pieceType.toString().startsWith("W"), pieces)) {
