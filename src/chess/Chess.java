@@ -66,9 +66,6 @@ public class Chess {
 			System.out.println("move length 7+ (draw request)");
 		}
 
-		/* FOLLOWING LINE IS A PLACEHOLDER TO MAKE COMPILER HAPPY */
-		/* WHEN YOU FILL IN THIS METHOD, YOU NEED TO RETURN A ReturnPlay OBJECT */
-
 		ReturnPlay returnPlay = new ReturnPlay();
         returnPlay.piecesOnBoard = new ArrayList<>(initPieces);
 		//default to illegal so we can check the move
@@ -91,6 +88,18 @@ public class Chess {
 				if ((Pawn.isValidPawnMove(piece, fromFile, fromRank, toFile, toRank, initPieces)) || (Rook.isValidRookMove(piece, fromFile, fromRank, toFile, toRank, initPieces)) || (Knight.isValidKnightMove(piece, fromFile, fromRank, toFile, toRank, initPieces))
 				 || (Bishop.isValidBishopMove(piece, fromFile, fromRank, toFile, toRank, initPieces)) || (Queen.isValidQueenMove(piece, fromFile, fromRank, toFile, toRank, initPieces)) 
 				 || (King.isValidKingMove(piece, fromFile, fromRank, toFile, toRank, initPieces))) {
+
+					// Check and handle capture
+					for (int j = 0; j < initPieces.size(); j++) {
+						ReturnPiece targetPiece = initPieces.get(j);
+						if (targetPiece.pieceFile == toFile && targetPiece.pieceRank == toRank && !targetPiece.equals(piece)) {
+							// Piece is captured
+							initPieces.remove(j);
+							break;
+						}
+					}
+
+					// move the piece
 					piece.pieceFile = toFile;
 					piece.pieceRank = toRank;
 

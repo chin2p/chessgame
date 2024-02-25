@@ -18,7 +18,7 @@ public class Pawn {
                 return true;
             } else if (fromRank == 2 && rankChange == 2 && fileChange == 0 && !isPieceAt(toFile, toRank, pieces) && !isPieceAt(toFile, 3, pieces)) {
                 return true;
-            } else if (rankChange == 1 && Math.abs(fileChange) == 1 && isOpponentPieceAt(toFile, toRank, isWhite, pieces)) {
+            } else if (rankChange == 1 && Math.abs(fileChange) == 1 && isOpponentPieceAt(toFile, toRank, isBlack, pieces)) {
                 return true;
             }
         } else if (isBlack) {

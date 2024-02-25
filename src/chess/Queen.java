@@ -38,7 +38,8 @@ public class Queen {
         }
 
         // Ensure destination is either empty or contains an opponent's piece
-        return !isPieceAt(toFile, toRank, pieces) || isOpponentPieceAt(toFile, toRank, piece.pieceType.toString().startsWith("W"), pieces);
+        boolean isWhite = piece.pieceType == ReturnPiece.PieceType.WK;
+        return !isPieceAt(toFile, toRank, pieces) || isOpponentPieceAt(toFile, toRank, isWhite, pieces);
     }
 
     private static boolean isPieceAt(ReturnPiece.PieceFile file, int rank, ArrayList<ReturnPiece> pieces) {

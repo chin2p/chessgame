@@ -46,7 +46,8 @@ public class Rook {
         }
         
         // destination either empty or contain opponent piece
-        return !isPieceAt(toFile, toRank, pieces) || isOpponentPieceAt(toFile, toRank, piece.pieceType.toString().startsWith("W"), pieces);
+        boolean isWhite = piece.pieceType == ReturnPiece.PieceType.WK;
+        return !isPieceAt(toFile, toRank, pieces) || isOpponentPieceAt(toFile, toRank, isWhite, pieces);
 		
 		
 	}

@@ -19,10 +19,8 @@ public class Knight {
         boolean isValidLShape = (fileChange == 2 && rankChange == 1) || (fileChange == 1 && rankChange == 2);
 
         // Determine if the move is to an empty square or captures an opponent's piece
-        boolean isMoveLegal = isValidLShape && 
-                               (!isPieceAt(toFile, toRank, pieces) || 
-                                isOpponentPieceAt(toFile, toRank, piece.pieceType.toString().startsWith("W"), pieces));
-
+        boolean isWhite = piece.pieceType == ReturnPiece.PieceType.WK;
+        boolean isMoveLegal = isValidLShape && (!isPieceAt(toFile, toRank, pieces) || isOpponentPieceAt(toFile, toRank, isWhite, pieces));
         return isMoveLegal;
     }
 
