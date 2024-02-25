@@ -81,9 +81,11 @@ public class Chess {
         if (parts.length != 2){
 			if (parts.length == 1 && parts[0].equals("resign")) {
 				if (currPlayer == Player.white) {
-					System.out.println("White resigns");
+					returnPlay.message = ReturnPlay.Message.RESIGN_BLACK_WINS;
+					return returnPlay;
 				} else {
-					System.out.println("Black resigns");
+					returnPlay.message = ReturnPlay.Message.RESIGN_WHITE_WINS;
+					return returnPlay;
 				}
 			} else {
 				//illegal move
@@ -209,7 +211,7 @@ public class Chess {
 				returnPlay.message = ReturnPlay.Message.ILLEGAL_MOVE;
 			}
 		}
-		
+
 		return returnPlay;
 		
 	}
