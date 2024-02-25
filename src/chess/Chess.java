@@ -64,21 +64,23 @@ public class Chess {
 	public static ReturnPlay play(String move) {
 
 		/* FILL IN THIS METHOD */
-		if (move.length() == 5) {
-			System.out.println("move length 5 (standard move)");
-		} else if (move.length() == 6) {
-			System.out.println("move length 6 (resign)");
-		} else {
-			System.out.println("move length 7+ (draw request)");
-		}
+
+		// if (move.length() == 5) {
+		// 	System.out.println("move length 5 (standard move)");
+		// } else if (move.length() == 6) {
+		// 	System.out.println("move length 6 (resign)");
+		// } else {
+		// 	System.out.println("move length 7+ (draw request)");
+		// }
 
 		ReturnPlay returnPlay = new ReturnPlay();
         returnPlay.piecesOnBoard = new ArrayList<>(initPieces);
-		//default to illegal so we can check the move
-        returnPlay.message = ReturnPlay.Message.ILLEGAL_MOVE;
+		
 
 		String[] parts = move.split(" ");
         if (parts.length != 2){
+			//illegal move
+			returnPlay.message = ReturnPlay.Message.ILLEGAL_MOVE;
 			return returnPlay;
 		} 
 
@@ -87,96 +89,115 @@ public class Chess {
         ReturnPiece.PieceFile toFile = ReturnPiece.PieceFile.valueOf(parts[1].substring(0, 1));
         int toRank = Integer.parseInt(parts[1].substring(1));
 
+		//illegal move var
+		boolean legalMove = false;
+
 		for(int i = 0; i < initPieces.size(); i++) {
 			ReturnPiece piece = initPieces.get(i);
 
-			if (piece.pieceFile == fromFile && piece.pieceRank == fromRank) {
-				if ((Pawn.isValidPawnMove(piece, fromFile, fromRank, toFile, toRank, initPieces)) || (Rook.isValidRookMove(piece, fromFile, fromRank, toFile, toRank, initPieces)) || (Knight.isValidKnightMove(piece, fromFile, fromRank, toFile, toRank, initPieces))
-				 || (Bishop.isValidBishopMove(piece, fromFile, fromRank, toFile, toRank, initPieces)) || (Queen.isValidQueenMove(piece, fromFile, fromRank, toFile, toRank, initPieces)) 
-				 || (King.isValidKingMove(piece, fromFile, fromRank, toFile, toRank, initPieces))) {
+			if ((currPlayer == Player.white && piece.pieceType.name().startsWith("W")) ||
+        		(currPlayer == Player.black && piece.pieceType.name().startsWith("B"))) {
+				if (piece.pieceFile == fromFile && piece.pieceRank == fromRank) {
+					if ((Pawn.isValidPawnMove(piece, fromFile, fromRank, toFile, toRank, initPieces)) || (Rook.isValidRookMove(piece, fromFile, fromRank, toFile, toRank, initPieces)) || (Knight.isValidKnightMove(piece, fromFile, fromRank, toFile, toRank, initPieces))
+						|| (Bishop.isValidBishopMove(piece, fromFile, fromRank, toFile, toRank, initPieces)) || (Queen.isValidQueenMove(piece, fromFile, fromRank, toFile, toRank, initPieces)) 
+						|| (King.isValidKingMove(piece, fromFile, fromRank, toFile, toRank, initPieces))) {
+						//legal move
+						legalMove = true;
 
-					// En Passant capture check
-					if (Math.abs(fromFile.ordinal() - toFile.ordinal()) == 1 && 
-					((piece.pieceType == ReturnPiece.PieceType.WP && toRank == 6) || 
-					 (piece.pieceType == ReturnPiece.PieceType.BP && toRank == 3))) {
-						// Check if last move was a double pawn step and the move is en passant
-						if (lastMoveWasDoublePawnStep && lastPawnFile == toFile && 
-							((piece.pieceType == ReturnPiece.PieceType.WP && lastPawnRank == 5) || 
-							(piece.pieceType == ReturnPiece.PieceType.BP && lastPawnRank == 4))) {
-							int capturedPawnIndex = findPieceIndexAtPosition(initPieces, toFile, lastPawnRank);
-							if (capturedPawnIndex != -1) {
-								initPieces.remove(capturedPawnIndex);
+						// En Passant capture check
+						if (Math.abs(fromFile.ordinal() - toFile.ordinal()) == 1 && 
+							((piece.pieceType == ReturnPiece.PieceType.WP && toRank == 6) || 
+							(piece.pieceType == ReturnPiece.PieceType.BP && toRank == 3))) {
+							// Check if last move was a double pawn step and the move is en passant
+							if (lastMoveWasDoublePawnStep && lastPawnFile == toFile && 
+								((piece.pieceType == ReturnPiece.PieceType.WP && lastPawnRank == 5) || 
+								(piece.pieceType == ReturnPiece.PieceType.BP && lastPawnRank == 4))) {
+								int capturedPawnIndex = findPieceIndexAtPosition(initPieces, toFile, lastPawnRank);
+								if (capturedPawnIndex != -1) {
+									initPieces.remove(capturedPawnIndex);
+								}
 							}
 						}
-					}
 
-					// Check and handle regular captures
-					for (int j = 0; j < initPieces.size(); j++) {
-						ReturnPiece targetPiece = initPieces.get(j);
-						if (targetPiece.pieceFile == toFile && targetPiece.pieceRank == toRank && !targetPiece.equals(piece)) {
-							// Piece is captured
-							initPieces.remove(j);
-							break;
-						}
-					}
-
-					// move the piece
-					piece.pieceFile = toFile;
-					piece.pieceRank = toRank;
-
-					// Update lastMoveWasDoublePawnStep for the next move
-					if (piece.pieceType == ReturnPiece.PieceType.WP && fromRank == 2 && toRank == 4) {
-						lastPawnFile = fromFile;
-						lastPawnRank = toRank;
-						lastMoveWasDoublePawnStep = true;
-					} else if (piece.pieceType == ReturnPiece.PieceType.BP && fromRank == 7 && toRank == 5) {
-						lastPawnFile = fromFile;
-						lastPawnRank = toRank;
-						lastMoveWasDoublePawnStep = true;
-					} else {
-						lastMoveWasDoublePawnStep = false;
-					}
-
-					
-					//also promotion mechanics here
-					if ((piece.pieceType == ReturnPiece.PieceType.BP || piece.pieceType == ReturnPiece.PieceType.WP) && (toRank == 8 || toRank == 1)) {
-						if (move.length() < 7 || move.substring(6, 1) == "Q") {
-							//promote to queen
-							if (piece.pieceType == ReturnPiece.PieceType.BP) {
-								piece.pieceType = ReturnPiece.PieceType.BQ;
-							} else if (piece.pieceType == ReturnPiece.PieceType.WP) {
-								piece.pieceType = ReturnPiece.PieceType.WQ;
-							}
-						} else if (move.substring(6, 1) == "N") {
-							//promote to knight
-							if (piece.pieceType == ReturnPiece.PieceType.BP) {
-								piece.pieceType = ReturnPiece.PieceType.BN;
-							} else if (piece.pieceType == ReturnPiece.PieceType.WP) {
-								piece.pieceType = ReturnPiece.PieceType.WN;
-							}
-						} else if (move.substring(6, 1) == "B") {
-							//promote to bishop
-							if (piece.pieceType == ReturnPiece.PieceType.BP) {
-								piece.pieceType = ReturnPiece.PieceType.BB;
-							} else if (piece.pieceType == ReturnPiece.PieceType.WP) {
-								piece.pieceType = ReturnPiece.PieceType.WB;
-							}
-						} else if (move.substring(6, 1) == "R") {
-							//promote to rook
-							if (piece.pieceType == ReturnPiece.PieceType.BP) {
-								piece.pieceType = ReturnPiece.PieceType.BR;
-							} else if (piece.pieceType == ReturnPiece.PieceType.WP) {
-								piece.pieceType = ReturnPiece.PieceType.WR;
+						// Check and handle regular captures
+						for (int j = 0; j < initPieces.size(); j++) {
+							ReturnPiece targetPiece = initPieces.get(j);
+							if (targetPiece.pieceFile == toFile && targetPiece.pieceRank == toRank && !targetPiece.equals(piece)) {
+								// Piece is captured
+								initPieces.remove(j);
+								break;
 							}
 						}
-						//else, it's an illegal move
+
+						// move the piece
+						piece.pieceFile = toFile;
+						piece.pieceRank = toRank;
+
+						// Update lastMoveWasDoublePawnStep for the next move
+						if (piece.pieceType == ReturnPiece.PieceType.WP && fromRank == 2 && toRank == 4) {
+							lastPawnFile = fromFile;
+							lastPawnRank = toRank;
+							lastMoveWasDoublePawnStep = true;
+						} else if (piece.pieceType == ReturnPiece.PieceType.BP && fromRank == 7 && toRank == 5) {
+							lastPawnFile = fromFile;
+							lastPawnRank = toRank;
+							lastMoveWasDoublePawnStep = true;
+						} else {
+							lastMoveWasDoublePawnStep = false;
+						}
+
+						
+						//also promotion mechanics here
+						if ((piece.pieceType == ReturnPiece.PieceType.BP || piece.pieceType == ReturnPiece.PieceType.WP) && (toRank == 8 || toRank == 1)) {
+							if (move.length() < 7 || move.substring(6, 1) == "Q") {
+								//promote to queen
+								if (piece.pieceType == ReturnPiece.PieceType.BP) {
+									piece.pieceType = ReturnPiece.PieceType.BQ;
+								} else if (piece.pieceType == ReturnPiece.PieceType.WP) {
+									piece.pieceType = ReturnPiece.PieceType.WQ;
+								}
+							} else if (move.substring(6, 1) == "N") {
+								//promote to knight
+								if (piece.pieceType == ReturnPiece.PieceType.BP) {
+									piece.pieceType = ReturnPiece.PieceType.BN;
+								} else if (piece.pieceType == ReturnPiece.PieceType.WP) {
+									piece.pieceType = ReturnPiece.PieceType.WN;
+								}
+							} else if (move.substring(6, 1) == "B") {
+								//promote to bishop
+								if (piece.pieceType == ReturnPiece.PieceType.BP) {
+									piece.pieceType = ReturnPiece.PieceType.BB;
+								} else if (piece.pieceType == ReturnPiece.PieceType.WP) {
+									piece.pieceType = ReturnPiece.PieceType.WB;
+								}
+							} else if (move.substring(6, 1) == "R") {
+								//promote to rook
+								if (piece.pieceType == ReturnPiece.PieceType.BP) {
+									piece.pieceType = ReturnPiece.PieceType.BR;
+								} else if (piece.pieceType == ReturnPiece.PieceType.WP) {
+									piece.pieceType = ReturnPiece.PieceType.WR;
+								}
+							}
+							//else, it's an illegal move
+						}
+
+						switchPlayer();
+
+						returnPlay.message = null;
+						break;
 					}
 
-					switchPlayer();
-					break;
 				}
-
+			} else {
+				// If the piece does not belong to the current player, it's an illegal move
+				returnPlay.message = ReturnPlay.Message.ILLEGAL_MOVE;
+				return returnPlay;
 			}
+		}
+
+		// If no legal move is found, set the message to illegal move
+		if (!legalMove) {
+			returnPlay.message = ReturnPlay.Message.ILLEGAL_MOVE;
 		}
 
 		return returnPlay;
