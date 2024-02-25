@@ -3,6 +3,7 @@ package chess;
 import java.util.ArrayList;
 
 public class Rook {
+
     public static boolean isValidRookMove(ReturnPiece piece, ReturnPiece.PieceFile fromFile, int fromRank, ReturnPiece.PieceFile toFile, int toRank, ArrayList<ReturnPiece> pieces) {
         boolean isRook = piece.pieceType == ReturnPiece.PieceType.WR || piece.pieceType == ReturnPiece.PieceType.BR;
         if (!isRook) {
@@ -15,64 +16,39 @@ public class Rook {
 		
 		if (rankChange != 0 && fileChange == 0) {
 			//if piece moves vertically
-			if (rankChange < 0) { //piece moves down
-				for (int i = 1; i <= rankChange; i++) {
-					if (isOpponentPieceAt(toFile, toRank - i, piece.pieceType.toString().startsWith("W"), pieces)) {
-						return false;
-					}
-                    if (isPieceAt(toFile, toRank, pieces)) {
-                        return false;
-                    }
-				}
-				return true;
-			} else if (rankChange > 0) { //piece moves up
-				for (int i = 1; i <= rankChange; i++) {
-					if (isOpponentPieceAt(toFile, toRank + i, piece.pieceType.toString().startsWith("W"), pieces)) {
-						return false;
-					}
-                    if (isPieceAt(toFile, toRank, pieces)) {
-                        return false;
-                    }
-				}
-				return true;
-			} else {
-				return false;
-			}
+			int step;
+            if (rankChange > 0) {
+                step = 1; //moving upwards
+            } else {
+                step = -1; //moving downwards
+            }
+            for (int i = 1; i < Math.abs(rankChange); i++) {
+                if (isPieceAt(fromFile, fromRank + i * step, pieces)) {
+                    return false; // path blocked
+                }
+            }
 		} else if (rankChange == 0 && fileChange != 0) {
 			//if piece moves horizontally
-            if (fileChange < 0) {
-                for (int i = 1; i <= fileChange; i++) {
-					if (isOpponentPieceAt(toFile.ordinal() - 1, toRank, piece.pieceType.toString().startsWith("W"), pieces)) {
-						return false;
-					}
-                    if (isPieceAt(toFile, toRank, pieces)) {
-                        return false;
-                    }
+            int step;
+            if (fileChange > 0) {
+                step = 1; // moving right
+            } else {
+                step = -1; // moving left
+            }
+            for (int i = 1; i < Math.abs(fileChange); i++) {
+                if (isPieceAt(ReturnPiece.PieceFile.values()[fromFile.ordinal() + i * step], fromRank, pieces)) {
+                    return false; // path blocked
                 }
-				return true;
-            } else if (fileChange > 0) { //piece moves up
-				for (int i = 1; i <= fileChange; i++) {
-					if (isOpponentPieceAt(toFile.ordinal() + i, toRank, piece.pieceType.toString().startsWith("W"), pieces)) {
-						return false;
-					}
-                    if (isPieceAt(toFile, toRank, pieces)) {
-                        return false;
-                    }
-				}
-				return true;
-			} else {
-				return false;
-			}
-		} else if (rankChange !=0 && fileChange != 0) {
-            //if piece moves, but not like a rook
-			return false;
-		} else if (rankChange == 0 && fileChange == 0) {
-            //if piece doesn't move
-            return false;
+            }
+        } else {
+            //if none then invalid move
+		    return false;
         }
+        
+        // destination either empty or contain opponent piece
+        return !isPieceAt(toFile, toRank, pieces) || isOpponentPieceAt(toFile, toRank, piece.pieceType.toString().startsWith("W"), pieces);
 		
-		//if none then invalid move
-		return false;
+		
 	}
 
     private static boolean isPieceAt(ReturnPiece.PieceFile file, int rank, ArrayList<ReturnPiece> pieces) {
