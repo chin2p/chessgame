@@ -43,7 +43,6 @@ public class Chess {
 
 	//var declarations
 	private static ArrayList<ReturnPiece> initPieces = new ArrayList<>();
-
 	private static Player currPlayer = Player.white;
 
 	// Fields to track the last pawn move for en passant
@@ -73,14 +72,6 @@ public class Chess {
 
 		/* FILL IN THIS METHOD */
 
-		// if (move.length() == 5) {
-		// 	System.out.println("move length 5 (standard move)");
-		// } else if (move.length() == 6) {
-		// 	System.out.println("move length 6 (resign)");
-		// } else {
-		// 	System.out.println("move length 7+ (draw request)");
-		// }
-
 		ReturnPlay returnPlay = new ReturnPlay();
         returnPlay.piecesOnBoard = new ArrayList<>(initPieces);
 		
@@ -90,9 +81,11 @@ public class Chess {
 			if (parts.length == 1 && parts[0].equals("resign")) {
 				if (currPlayer == Player.white) {
 					returnPlay.message = ReturnPlay.Message.RESIGN_BLACK_WINS;
+					start();
 					return returnPlay;
 				} else {
 					returnPlay.message = ReturnPlay.Message.RESIGN_WHITE_WINS;
+					start();
 					return returnPlay;
 				}
 			} else {
@@ -126,11 +119,6 @@ public class Chess {
 				return returnPlay;
 			}
 		}
-
-
-
-
-
 
 			for(int i = 0; i < initPieces.size(); i++) {
 				ReturnPiece piece = initPieces.get(i);
@@ -268,11 +256,12 @@ public class Chess {
 		/* FILL IN THIS METHOD */
 		
 		initPieces.clear();
-
-        // Initialize pieces here
 		initializePieces();
-
-        // Print the board
+		currPlayer = Player.white; // Ensure the starting player is set correctly
+		lastPawnFile = null;
+		lastPawnRank = -1;
+		lastMoveWasDoublePawnStep = false;
+		// print board
 		PlayChess.printBoard(initPieces);
 
 	}
