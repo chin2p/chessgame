@@ -95,7 +95,7 @@ public class Chess {
 					returnPlay.message = ReturnPlay.Message.RESIGN_WHITE_WINS;
 					return returnPlay;
 				}
-			} else {
+			} else if (parts.length >= 4) {
 				//illegal move
 				returnPlay.message = ReturnPlay.Message.ILLEGAL_MOVE;
 				return returnPlay;
@@ -255,6 +255,10 @@ public class Chess {
 			if (!legalMove) {
 				returnPlay.message = ReturnPlay.Message.ILLEGAL_MOVE;
 			}
+		}
+
+		if (parts.length == 3 && parts[2].equals("draw?")) {
+			returnPlay.message = ReturnPlay.Message.DRAW;
 		}
 
 		return returnPlay;
