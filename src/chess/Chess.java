@@ -95,6 +95,12 @@ public class Chess {
 					returnPlay.message = ReturnPlay.Message.RESIGN_WHITE_WINS;
 					return returnPlay;
 				}
+			} else if (parts.length == 1 && parts[0].equals("start")) {
+				// need to implement "start" (aka restart) here
+				// i dont think i did this right:
+				//Chess.initializePieces();
+				//returnPlay.piecesOnBoard = new ArrayList<>(initPieces);
+				return returnPlay;
 			} else if (parts.length >= 4) {
 				//illegal move
 				returnPlay.message = ReturnPlay.Message.ILLEGAL_MOVE;
