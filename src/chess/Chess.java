@@ -254,9 +254,11 @@ public class Chess {
 										!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, 8)) {
 										// check only
 										returnPlay.message = ReturnPlay.Message.CHECK;
+										return returnPlay;
 									} else {
 										// is checkmate
 										returnPlay.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+										return returnPlay;
 									}
 								} else if (move.charAt(4) == '1') {
 									// check up, up-right, right
@@ -265,9 +267,11 @@ public class Chess {
 										!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, 2)) {
 										// check only
 										returnPlay.message = ReturnPlay.Message.CHECK;
+										return returnPlay;
 									} else {
 										// is checkmate
 										returnPlay.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+										return returnPlay;
 									}
 								} else {
 									// check the rest
@@ -278,9 +282,11 @@ public class Chess {
 										!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, (int)(move.charAt(4) - 1))) {
 										// check only
 										returnPlay.message = ReturnPlay.Message.CHECK;
+										return returnPlay;
 									} else {
 										// is checkmate
 										returnPlay.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+										return returnPlay;
 									}
 								}
 							} else if (move.charAt(3) == 'a') {
@@ -291,9 +297,11 @@ public class Chess {
 										!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, 8)) {
 										// check only
 										returnPlay.message = ReturnPlay.Message.CHECK;
+										return returnPlay;
 									} else {
 										// is checkmate
 										returnPlay.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+										return returnPlay;
 									}
 								} else if (move.charAt(4) == '1') {
 									// check up, up-right, right
@@ -302,9 +310,11 @@ public class Chess {
 										!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, 2)) {
 										// check only
 										returnPlay.message = ReturnPlay.Message.CHECK;
+										return returnPlay;
 									} else {
 										// is checkmate
 										returnPlay.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+										return returnPlay;
 									}
 								} else {
 									// check the rest
@@ -315,9 +325,11 @@ public class Chess {
 										!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, (int)(move.charAt(4) - 1))) {
 										// check only
 										returnPlay.message = ReturnPlay.Message.CHECK;
+										return returnPlay;
 									} else {
 										// is checkmate
 										returnPlay.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+										return returnPlay;
 									}
 								}
 							} else if (move.charAt(3) == 'h') {
@@ -328,9 +340,11 @@ public class Chess {
 										!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.g, 8)) {
 										// check only
 										returnPlay.message = ReturnPlay.Message.CHECK;
+										return returnPlay;
 									} else {
 										// is checkmate
 										returnPlay.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+										return returnPlay;
 									}
 								} else if (move.charAt(4) == '1') {
 									// check up, up-left, left
@@ -339,9 +353,11 @@ public class Chess {
 										!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.g, 2)) {
 										// check only
 										returnPlay.message = ReturnPlay.Message.CHECK;
+										return returnPlay;
 									} else {
 										// is checkmate
 										returnPlay.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+										return returnPlay;
 									}
 								} else {
 									// check the rest
@@ -352,9 +368,11 @@ public class Chess {
 										!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.g, (int)(move.charAt(4) - 1))) {
 										// check only
 										returnPlay.message = ReturnPlay.Message.CHECK;
+										return returnPlay;
 									} else {
 										// is checkmate
 										returnPlay.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+										return returnPlay;
 									}
 								}
 							} else {
@@ -395,9 +413,11 @@ public class Chess {
 										!isSquareUnderAttack(currPlayer, right, 7)) {
 										// check only
 										returnPlay.message = ReturnPlay.Message.CHECK;
+										return returnPlay;
 									} else {
 										// is checkmate
 										returnPlay.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+										return returnPlay;
 									}
 								} else if (move.charAt(4) == '1') {
 									// check in an upside-down U shape
@@ -408,9 +428,11 @@ public class Chess {
 										!isSquareUnderAttack(currPlayer, right, 2)) {
 										// check only
 										returnPlay.message = ReturnPlay.Message.CHECK;
+										return returnPlay;
 									} else {
 										// is checkmate
 										returnPlay.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+										return returnPlay;
 									}
 								} else {
 									// check the rest
@@ -424,9 +446,11 @@ public class Chess {
 										!isSquareUnderAttack(currPlayer, right, (int)(move.charAt(4) - 1))) {
 										// check only
 										returnPlay.message = ReturnPlay.Message.CHECK;
+										return returnPlay;
 									} else {
 										// is checkmate
 										returnPlay.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+										return returnPlay;
 									}
 								}
 							}
@@ -441,9 +465,11 @@ public class Chess {
 											!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, 8)) {
 											// check only
 											returnPlay.message = ReturnPlay.Message.CHECK;
+											return returnPlay;
 										} else {
 											// is checkmate
 											returnPlay.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+											return returnPlay;
 										}
 									} else if (move.charAt(4) == '1') {
 										// check up, up-right, right
@@ -452,9 +478,11 @@ public class Chess {
 											!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, 2)) {
 											// check only
 											returnPlay.message = ReturnPlay.Message.CHECK;
+											return returnPlay;
 										} else {
 											// is checkmate
 											returnPlay.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+											return returnPlay;
 										}
 									} else {
 										// check the rest
@@ -465,9 +493,11 @@ public class Chess {
 											!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, (int)(move.charAt(4) - 1))) {
 											// check only
 											returnPlay.message = ReturnPlay.Message.CHECK;
+											return returnPlay;
 										} else {
 											// is checkmate
 											returnPlay.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+											return returnPlay;
 										}
 									}
 								 } else if (move.charAt(3) == 'a') {
@@ -478,9 +508,11 @@ public class Chess {
 											!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, 8)) {
 											// check only
 											returnPlay.message = ReturnPlay.Message.CHECK;
+											return returnPlay;
 										} else {
 											// is checkmate
 											returnPlay.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+											return returnPlay;
 										}
 									} else if (move.charAt(4) == '1') {
 										// check up, up-right, right
@@ -489,9 +521,11 @@ public class Chess {
 											!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, 2)) {
 											// check only
 											returnPlay.message = ReturnPlay.Message.CHECK;
+											return returnPlay;
 										} else {
 											// is checkmate
 											returnPlay.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+											return returnPlay;
 										}
 									} else {
 										// check the rest
@@ -502,9 +536,11 @@ public class Chess {
 											!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, (int)(move.charAt(4) - 1))) {
 											// check only
 											returnPlay.message = ReturnPlay.Message.CHECK;
+											return returnPlay;
 										} else {
 											// is checkmate
 											returnPlay.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+											return returnPlay;
 										}
 									}
 								} else if (move.charAt(3) == 'h') {
@@ -515,9 +551,11 @@ public class Chess {
 											!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.g, 8)) {
 											// check only
 											returnPlay.message = ReturnPlay.Message.CHECK;
+											return returnPlay;
 										} else {
 											// is checkmate
 											returnPlay.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+											return returnPlay;
 										}
 									} else if (move.charAt(4) == '1') {
 										// check up, up-left, left
@@ -526,9 +564,11 @@ public class Chess {
 											!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.g, 2)) {
 											// check only
 											returnPlay.message = ReturnPlay.Message.CHECK;
+											return returnPlay;
 										} else {
 											// is checkmate
 											returnPlay.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+											return returnPlay;
 										}
 									} else {
 										// check the rest
@@ -539,9 +579,11 @@ public class Chess {
 											!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.g, (int)(move.charAt(4) - 1))) {
 											// check only
 											returnPlay.message = ReturnPlay.Message.CHECK;
+											return returnPlay;
 										} else {
 											// is checkmate
 											returnPlay.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+											return returnPlay;
 										}
 									}
 								} else {
@@ -582,9 +624,11 @@ public class Chess {
 											!isSquareUnderAttack(currPlayer, right, 7)) {
 											// check only
 											returnPlay.message = ReturnPlay.Message.CHECK;
+											return returnPlay;
 										} else {
 											// is checkmate
 											returnPlay.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+											return returnPlay;
 										}
 									} else if (move.charAt(4) == '1') {
 										// check in an upside-down U shape
@@ -595,9 +639,11 @@ public class Chess {
 											!isSquareUnderAttack(currPlayer, right, 2)) {
 											// check only
 											returnPlay.message = ReturnPlay.Message.CHECK;
+											return returnPlay;
 										} else {
 											// is checkmate
 											returnPlay.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+											return returnPlay;
 										}
 									} else {
 										// check the rest
@@ -611,9 +657,11 @@ public class Chess {
 											!isSquareUnderAttack(currPlayer, right, (int)(move.charAt(4) - 1))) {
 											// check only
 											returnPlay.message = ReturnPlay.Message.CHECK;
+											return returnPlay;
 										} else {
 											// is checkmate
 											returnPlay.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+											return returnPlay;
 										}
 									}
 								}
