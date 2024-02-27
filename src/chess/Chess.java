@@ -136,22 +136,23 @@ public class Chess {
 								|| (King.isValidKingMove(piece, fromFile, fromRank, toFile, toRank, initPieces))) {
 								//legal move
 								legalMove = true;
-								System.out.println("VALID MOVE");
+								
 
-							// // En Passant capture check
-							// if (Math.abs(fromFile.ordinal() - toFile.ordinal()) == 1 && 
-							// 	((piece.pieceType == ReturnPiece.PieceType.WP && toRank == 6) || 
-							// 	(piece.pieceType == ReturnPiece.PieceType.BP && toRank == 3))) {
-							// 	// Check if last move was a double pawn step and the move is en passant
-							// 	if (lastMoveWasDoublePawnStep && lastPawnFile == toFile && 
-							// 		((piece.pieceType == ReturnPiece.PieceType.WP && lastPawnRank == 5) || 
-							// 		(piece.pieceType == ReturnPiece.PieceType.BP && lastPawnRank == 4))) {
-							// 		int capturedPawnIndex = findPieceIndexAtPosition(initPieces, toFile, lastPawnRank);
-							// 		if (capturedPawnIndex != -1) {
-							// 			initPieces.remove(capturedPawnIndex);
-							// 		}
-							// 	}
-							// }
+							// En Passant capture check
+							if (Math.abs(fromFile.ordinal() - toFile.ordinal()) == 1 && 
+								((piece.pieceType == ReturnPiece.PieceType.WP && toRank == 6) || 
+								(piece.pieceType == ReturnPiece.PieceType.BP && toRank == 3))) {
+								// Check if last move was a double pawn step and the move is en passant
+								if (lastMoveWasDoublePawnStep && lastPawnFile == toFile && 
+									((piece.pieceType == ReturnPiece.PieceType.WP && lastPawnRank == 5) || 
+									(piece.pieceType == ReturnPiece.PieceType.BP && lastPawnRank == 4))) {
+									int capturedPawnIndex = findPieceIndexAtPosition(initPieces, toFile, lastPawnRank);
+									if (capturedPawnIndex != -1) {
+										initPieces.remove(capturedPawnIndex);
+										returnPlay.piecesOnBoard.remove(capturedPawnIndex);
+									}
+								}
+							}
 
 							//castling king/rook moved check
 							// Example for updating king and rook movement flags
@@ -173,6 +174,7 @@ public class Chess {
 								if (targetPiece.pieceFile == toFile && targetPiece.pieceRank == toRank && !targetPiece.equals(piece)) {
 									// Piece is captured
 									initPieces.remove(j);
+									returnPlay.piecesOnBoard.remove(j);
 									break;
 								}
 							}
