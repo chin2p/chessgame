@@ -178,9 +178,13 @@ public class Chess {
 								}
 							}
 
+							System.out.println("TESTING: piece was at " + toFile + toRank);
+							
 							// move the piece
 							piece.pieceFile = toFile;
 							piece.pieceRank = toRank;
+
+							System.out.println("TESTING: piece is now at " + toFile + toRank);
 
 							// Update lastMoveWasDoublePawnStep for the next move
 							if (piece.pieceType == ReturnPiece.PieceType.WP && fromRank == 2 && toRank == 4) {
