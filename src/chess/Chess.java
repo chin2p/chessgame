@@ -248,34 +248,34 @@ public class Chess {
 						if (currPlayer == Player.white && piece.pieceType == ReturnPiece.PieceType.WK) {
 							if (isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank)) {
 								//check for checkmate
-								if (isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-									isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-									isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-									isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-									isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-									isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-									isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-									isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank)) {
-									returnPlay.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
-								} else {
-									//if not checkmate, it's check
-									returnPlay.message = ReturnPlay.Message.CHECK;
-								}
+								//if (isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
+								//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
+								//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
+								//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
+								//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
+								//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
+								//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
+								//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank)) {
+								//	returnPlay.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+								//} else {
+								//	//if not checkmate, it's check
+								//	returnPlay.message = ReturnPlay.Message.CHECK;
+								//}
 							} else if (currPlayer == Player.black && piece.pieceType == ReturnPiece.PieceType.BK) {
 								//check for checkmate
-								if (isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-									isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-									isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-									isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-									isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-									isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-									isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-									isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank)) {
-									returnPlay.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
-								} else {
-									//if not checkmate, it's check
-									returnPlay.message = ReturnPlay.Message.CHECK;
-								}
+								//if (isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
+								//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
+								//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
+								//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
+								//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
+								//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
+								//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
+								//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank)) {
+								//	returnPlay.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+								//} else {
+								//	//if not checkmate, it's check
+								//	returnPlay.message = ReturnPlay.Message.CHECK;
+								//}
 							}
 						}
 					}
@@ -303,7 +303,7 @@ public class Chess {
 		lastPawnRank = -1;
 		lastMoveWasDoublePawnStep = false;
 		// print board
-		//PlayChess.printBoard(initPieces);
+		PlayChess.printBoard(initPieces);
 
 	}
 
