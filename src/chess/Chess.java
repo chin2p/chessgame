@@ -168,118 +168,118 @@ public class Chess {
 							}
 
 
-								// Check and handle regular captures
-								for (int j = 0; j < initPieces.size(); j++) {
-									ReturnPiece targetPiece = initPieces.get(j);
-									if (targetPiece.pieceFile == toFile && targetPiece.pieceRank == toRank && !targetPiece.equals(piece)) {
-										// Piece is captured
-										initPieces.remove(j);
-										break;
-									}
+							// Check and handle regular captures
+							for (int j = 0; j < initPieces.size(); j++) {
+								ReturnPiece targetPiece = initPieces.get(j);
+								if (targetPiece.pieceFile == toFile && targetPiece.pieceRank == toRank && !targetPiece.equals(piece)) {
+									// Piece is captured
+									initPieces.remove(j);
+									break;
 								}
+							}
 
-								// move the piece
-								piece.pieceFile = toFile;
-								piece.pieceRank = toRank;
+							// move the piece
+							piece.pieceFile = toFile;
+							piece.pieceRank = toRank;
 
-								// Update lastMoveWasDoublePawnStep for the next move
-								if (piece.pieceType == ReturnPiece.PieceType.WP && fromRank == 2 && toRank == 4) {
-									lastPawnFile = fromFile;
-									lastPawnRank = toRank;
-									lastMoveWasDoublePawnStep = true;
-								} else if (piece.pieceType == ReturnPiece.PieceType.BP && fromRank == 7 && toRank == 5) {
-									lastPawnFile = fromFile;
-									lastPawnRank = toRank;
-									lastMoveWasDoublePawnStep = true;
-								} else {
-									lastMoveWasDoublePawnStep = false;
-								}
+							// Update lastMoveWasDoublePawnStep for the next move
+							if (piece.pieceType == ReturnPiece.PieceType.WP && fromRank == 2 && toRank == 4) {
+								lastPawnFile = fromFile;
+								lastPawnRank = toRank;
+								lastMoveWasDoublePawnStep = true;
+							} else if (piece.pieceType == ReturnPiece.PieceType.BP && fromRank == 7 && toRank == 5) {
+								lastPawnFile = fromFile;
+								lastPawnRank = toRank;
+								lastMoveWasDoublePawnStep = true;
+							} else {
+								lastMoveWasDoublePawnStep = false;
+							}
 
 								
-								//also promotion mechanics here
-								if ((piece.pieceType == ReturnPiece.PieceType.BP || piece.pieceType == ReturnPiece.PieceType.WP) && (toRank == 8 || toRank == 1)) {
-									if (move.length() < 7 || move.substring(6, 1) == "Q") {
-										//promote to queen
-										if (piece.pieceType == ReturnPiece.PieceType.BP) {
-											piece.pieceType = ReturnPiece.PieceType.BQ;
-										} else if (piece.pieceType == ReturnPiece.PieceType.WP) {
-											piece.pieceType = ReturnPiece.PieceType.WQ;
-										}
-									} else if (move.substring(6, 1) == "N") {
-										//promote to knight
-										if (piece.pieceType == ReturnPiece.PieceType.BP) {
-											piece.pieceType = ReturnPiece.PieceType.BN;
-										} else if (piece.pieceType == ReturnPiece.PieceType.WP) {
-											piece.pieceType = ReturnPiece.PieceType.WN;
-										}
-									} else if (move.substring(6, 1) == "B") {
-										//promote to bishop
-										if (piece.pieceType == ReturnPiece.PieceType.BP) {
-											piece.pieceType = ReturnPiece.PieceType.BB;
-										} else if (piece.pieceType == ReturnPiece.PieceType.WP) {
-											piece.pieceType = ReturnPiece.PieceType.WB;
-										}
-									} else if (move.substring(6, 1) == "R") {
-										//promote to rook
-										if (piece.pieceType == ReturnPiece.PieceType.BP) {
-											piece.pieceType = ReturnPiece.PieceType.BR;
-										} else if (piece.pieceType == ReturnPiece.PieceType.WP) {
-											piece.pieceType = ReturnPiece.PieceType.WR;
-										}
+							//also promotion mechanics here
+							if ((piece.pieceType == ReturnPiece.PieceType.BP || piece.pieceType == ReturnPiece.PieceType.WP) && (toRank == 8 || toRank == 1)) {
+								if (move.length() < 7 || move.substring(6, 1) == "Q") {
+									//promote to queen
+									if (piece.pieceType == ReturnPiece.PieceType.BP) {
+										piece.pieceType = ReturnPiece.PieceType.BQ;
+									} else if (piece.pieceType == ReturnPiece.PieceType.WP) {
+										piece.pieceType = ReturnPiece.PieceType.WQ;
 									}
-									//else, it's an illegal move
+								} else if (move.substring(6, 1) == "N") {
+									//promote to knight
+									if (piece.pieceType == ReturnPiece.PieceType.BP) {
+										piece.pieceType = ReturnPiece.PieceType.BN;
+									} else if (piece.pieceType == ReturnPiece.PieceType.WP) {
+										piece.pieceType = ReturnPiece.PieceType.WN;
+									}
+								} else if (move.substring(6, 1) == "B") {
+									//promote to bishop
+									if (piece.pieceType == ReturnPiece.PieceType.BP) {
+										piece.pieceType = ReturnPiece.PieceType.BB;
+									} else if (piece.pieceType == ReturnPiece.PieceType.WP) {
+										piece.pieceType = ReturnPiece.PieceType.WB;
+									}
+								} else if (move.substring(6, 1) == "R") {
+									//promote to rook
+									if (piece.pieceType == ReturnPiece.PieceType.BP) {
+										piece.pieceType = ReturnPiece.PieceType.BR;
+									} else if (piece.pieceType == ReturnPiece.PieceType.WP) {
+										piece.pieceType = ReturnPiece.PieceType.WR;
+									}
 								}
-
-								switchPlayer();
-
-								returnPlay.message = null;
-								break;
+									//else, it's an illegal move
 							}
 
+							switchPlayer();
+
+							returnPlay.message = null;
+							break;
+						}
+
+					}
+				}
+			}
+
+			// If no legal move is found, set the message to illegal move
+			if (!legalMove) {
+				returnPlay.message = ReturnPlay.Message.ILLEGAL_MOVE;
+			} else {
+				for (ReturnPiece piece : initPieces) {
+					if (currPlayer == Player.white && piece.pieceType == ReturnPiece.PieceType.WK) {
+						if (isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank)) {
+							//check for checkmate
+							//if (isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
+							//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
+							//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
+							//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
+							//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
+							//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
+							//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
+							//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank)) {
+							//	returnPlay.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+							//} else {
+							//	//if not checkmate, it's check
+							//	returnPlay.message = ReturnPlay.Message.CHECK;
+							//}
+						} else if (currPlayer == Player.black && piece.pieceType == ReturnPiece.PieceType.BK) {
+							//check for checkmate
+							//if (isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
+							//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
+							//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
+							//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
+							//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
+							//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
+							//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
+							//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank)) {
+							//	returnPlay.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+							//} else {
+							//	//if not checkmate, it's check
+							//	returnPlay.message = ReturnPlay.Message.CHECK;
+							//}
 						}
 					}
 				}
-
-				// If no legal move is found, set the message to illegal move
-				if (!legalMove) {
-					returnPlay.message = ReturnPlay.Message.ILLEGAL_MOVE;
-				} else {
-					for (ReturnPiece piece : initPieces) {
-						if (currPlayer == Player.white && piece.pieceType == ReturnPiece.PieceType.WK) {
-							if (isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank)) {
-								//check for checkmate
-								//if (isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-								//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-								//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-								//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-								//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-								//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-								//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-								//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank)) {
-								//	returnPlay.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
-								//} else {
-								//	//if not checkmate, it's check
-								//	returnPlay.message = ReturnPlay.Message.CHECK;
-								//}
-							} else if (currPlayer == Player.black && piece.pieceType == ReturnPiece.PieceType.BK) {
-								//check for checkmate
-								//if (isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-								//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-								//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-								//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-								//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-								//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-								//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-								//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank)) {
-								//	returnPlay.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
-								//} else {
-								//	//if not checkmate, it's check
-								//	returnPlay.message = ReturnPlay.Message.CHECK;
-								//}
-							}
-						}
-					}
-				}
+			}
 		}
 
 		if (parts.length == 3 && parts[2].equals("draw?")) {
