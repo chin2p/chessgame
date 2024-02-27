@@ -5,9 +5,12 @@ import java.util.ArrayList;
 public class Knight {
 
     public static boolean isValidKnightMove(ReturnPiece piece, ReturnPiece.PieceFile fromFile, int fromRank, ReturnPiece.PieceFile toFile, int toRank, ArrayList<ReturnPiece> pieces) {
-        // Ensure the piece is a knight
-        boolean isKnight = piece.pieceType == ReturnPiece.PieceType.WN || piece.pieceType == ReturnPiece.PieceType.BN;
-        if (!isKnight) {
+        // Determine if the piece is a white or black knight
+        boolean isWhiteKnight = piece.pieceType == ReturnPiece.PieceType.WN;
+        boolean isBlackKnight = piece.pieceType == ReturnPiece.PieceType.BN;
+        
+        // If the piece is neither a white nor black knight, the move is invalid
+        if (!isWhiteKnight && !isBlackKnight) {
             return false;
         }
 
@@ -18,9 +21,9 @@ public class Knight {
         // Check for L-shaped movement: 2 squares one direction, 1 square the other
         boolean isValidLShape = (fileChange == 2 && rankChange == 1) || (fileChange == 1 && rankChange == 2);
 
-        // Determine if the move is to an empty square or captures an opponent's piece
-        boolean isWhite = piece.pieceType == ReturnPiece.PieceType.WK;
-        boolean isMoveLegal = isValidLShape && (!isPieceAt(toFile, toRank, pieces) || isOpponentPieceAt(toFile, toRank, isWhite, pieces));
+        // Check if the move is to an empty square or captures an opponent's piece
+        boolean isMoveLegal = isValidLShape && (!isPieceAt(toFile, toRank, pieces) || isOpponentPieceAt(toFile, toRank, isWhiteKnight, pieces));
+        
         return isMoveLegal;
     }
 
@@ -33,10 +36,11 @@ public class Knight {
         return false;
     }
 
-    private static boolean isOpponentPieceAt(ReturnPiece.PieceFile file, int rank, boolean isWhite, ArrayList<ReturnPiece> pieces) {
+    private static boolean isOpponentPieceAt(ReturnPiece.PieceFile file, int rank, boolean isWhiteKnight, ArrayList<ReturnPiece> pieces) {
         for (ReturnPiece piece : pieces) {
             if (piece.pieceFile == file && piece.pieceRank == rank) {
-                return (isWhite && piece.pieceType.toString().startsWith("B")) || (!isWhite && piece.pieceType.toString().startsWith("W"));
+                boolean isOpponentPiece = (isWhiteKnight && piece.pieceType.toString().startsWith("B")) || (!isWhiteKnight && piece.pieceType.toString().startsWith("W"));
+                return isOpponentPiece;
             }
         }
         return false;

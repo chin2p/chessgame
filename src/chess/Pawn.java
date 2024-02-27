@@ -18,7 +18,7 @@ public class Pawn {
                 return true;
             } else if (fromRank == 2 && rankChange == 2 && fileChange == 0 && !isPieceAt(toFile, toRank, pieces) && !isPieceAt(toFile, 3, pieces)) {
                 return true;
-            } else if (rankChange == 1 && Math.abs(fileChange) == 1 && isOpponentPieceAt(toFile, toRank, isBlack, pieces)) {
+            } else if (rankChange == 1 && Math.abs(fileChange) == 1 && isOpponentPieceAt(toFile, toRank, isWhite, pieces)) {
                 return true;
             }
         } else if (isBlack) {
@@ -45,9 +45,15 @@ public class Pawn {
     private static boolean isOpponentPieceAt(ReturnPiece.PieceFile file, int rank, boolean isWhite, ArrayList<ReturnPiece> pieces) {
         for (ReturnPiece piece : pieces) {
             if (piece.pieceFile == file && piece.pieceRank == rank) {
-                return (isWhite && piece.pieceType.toString().startsWith("B")) || (!isWhite && piece.pieceType.toString().startsWith("W"));
+                System.out.println("isWhite: " + isWhite);
+                System.out.println("pieceType starts with B: " + piece.pieceType.toString().startsWith("B"));
+                boolean isOpponentPiece = (isWhite && piece.pieceType.toString().startsWith("B")) || (!isWhite && piece.pieceType.toString().startsWith("W"));
+                // Debug output to check if an opponent piece is detected correctly
+                System.out.println("Checking opponent piece at " + file + rank + ": " + isOpponentPiece);
+                return isOpponentPiece;
             }
         }
         return false;
     }
+    
 }

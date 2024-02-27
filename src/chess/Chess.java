@@ -128,29 +128,30 @@ public class Chess {
 
 					if ((currPlayer == Player.white && piece.pieceType.name().startsWith("W")) ||
 						(currPlayer == Player.black && piece.pieceType.name().startsWith("B"))) {
-						
-						
+								
 						if (piece.pieceFile == fromFile && piece.pieceRank == fromRank) {
+							
 							if ((Pawn.isValidPawnMove(piece, fromFile, fromRank, toFile, toRank, initPieces)) || (Rook.isValidRookMove(piece, fromFile, fromRank, toFile, toRank, initPieces)) || (Knight.isValidKnightMove(piece, fromFile, fromRank, toFile, toRank, initPieces))
 								|| (Bishop.isValidBishopMove(piece, fromFile, fromRank, toFile, toRank, initPieces)) || (Queen.isValidQueenMove(piece, fromFile, fromRank, toFile, toRank, initPieces)) 
 								|| (King.isValidKingMove(piece, fromFile, fromRank, toFile, toRank, initPieces))) {
 								//legal move
 								legalMove = true;
+								System.out.println("VALID MOVE");
 
-							// En Passant capture check
-							if (Math.abs(fromFile.ordinal() - toFile.ordinal()) == 1 && 
-								((piece.pieceType == ReturnPiece.PieceType.WP && toRank == 6) || 
-								(piece.pieceType == ReturnPiece.PieceType.BP && toRank == 3))) {
-								// Check if last move was a double pawn step and the move is en passant
-								if (lastMoveWasDoublePawnStep && lastPawnFile == toFile && 
-									((piece.pieceType == ReturnPiece.PieceType.WP && lastPawnRank == 5) || 
-									(piece.pieceType == ReturnPiece.PieceType.BP && lastPawnRank == 4))) {
-									int capturedPawnIndex = findPieceIndexAtPosition(initPieces, toFile, lastPawnRank);
-									if (capturedPawnIndex != -1) {
-										initPieces.remove(capturedPawnIndex);
-									}
-								}
-							}
+							// // En Passant capture check
+							// if (Math.abs(fromFile.ordinal() - toFile.ordinal()) == 1 && 
+							// 	((piece.pieceType == ReturnPiece.PieceType.WP && toRank == 6) || 
+							// 	(piece.pieceType == ReturnPiece.PieceType.BP && toRank == 3))) {
+							// 	// Check if last move was a double pawn step and the move is en passant
+							// 	if (lastMoveWasDoublePawnStep && lastPawnFile == toFile && 
+							// 		((piece.pieceType == ReturnPiece.PieceType.WP && lastPawnRank == 5) || 
+							// 		(piece.pieceType == ReturnPiece.PieceType.BP && lastPawnRank == 4))) {
+							// 		int capturedPawnIndex = findPieceIndexAtPosition(initPieces, toFile, lastPawnRank);
+							// 		if (capturedPawnIndex != -1) {
+							// 			initPieces.remove(capturedPawnIndex);
+							// 		}
+							// 	}
+							// }
 
 							//castling king/rook moved check
 							// Example for updating king and rook movement flags
