@@ -167,7 +167,6 @@ public class Chess {
 								else if (fromFile == ReturnPiece.PieceFile.h) blackRookHMoved = true;
 							}
 
-
 							// Check and handle regular captures
 							for (int j = 0; j < initPieces.size(); j++) {
 								ReturnPiece targetPiece = initPieces.get(j);
@@ -178,13 +177,9 @@ public class Chess {
 								}
 							}
 
-							System.out.println("TESTING: piece was at " + toFile + toRank);
-							
 							// move the piece
 							piece.pieceFile = toFile;
 							piece.pieceRank = toRank;
-
-							System.out.println("TESTING: piece is now at " + toFile + toRank);
 
 							// Update lastMoveWasDoublePawnStep for the next move
 							if (piece.pieceType == ReturnPiece.PieceType.WP && fromRank == 2 && toRank == 4) {
@@ -198,7 +193,6 @@ public class Chess {
 							} else {
 								lastMoveWasDoublePawnStep = false;
 							}
-
 								
 							//also promotion mechanics here
 							if ((piece.pieceType == ReturnPiece.PieceType.BP || piece.pieceType == ReturnPiece.PieceType.WP) && (toRank == 8 || toRank == 1)) {
@@ -252,34 +246,378 @@ public class Chess {
 					if (currPlayer == Player.white && piece.pieceType == ReturnPiece.PieceType.WK) {
 						if (isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank)) {
 							//check for checkmate
-							//if (isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-							//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-							//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-							//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-							//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-							//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-							//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-							//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank)) {
-							//	returnPlay.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
-							//} else {
-							//	//if not checkmate, it's check
-							//	returnPlay.message = ReturnPlay.Message.CHECK;
-							//}
+							if (move.charAt(3) == 'a') {
+								if (move.charAt(4) == '8') {
+									// check down, down-right, right
+									if (!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.a, 7) ||
+										!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, 7) ||
+										!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, 8)) {
+										// check only
+										returnPlay.message = ReturnPlay.Message.CHECK;
+									} else {
+										// is checkmate
+										returnPlay.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+									}
+								} else if (move.charAt(4) == '1') {
+									// check up, up-right, right
+									if (!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.a, 2) ||
+										!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, 1) ||
+										!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, 2)) {
+										// check only
+										returnPlay.message = ReturnPlay.Message.CHECK;
+									} else {
+										// is checkmate
+										returnPlay.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+									}
+								} else {
+									// check the rest
+									if (!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.a, (int)(move.charAt(4) + 1)) ||
+										!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.a, (int)(move.charAt(4) - 1)) ||
+										!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, (int)(move.charAt(4) + 1)) ||
+										!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, (int)(move.charAt(4))) ||
+										!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, (int)(move.charAt(4) - 1))) {
+										// check only
+										returnPlay.message = ReturnPlay.Message.CHECK;
+									} else {
+										// is checkmate
+										returnPlay.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+									}
+								}
+							} else if (move.charAt(3) == 'a') {
+								if (move.charAt(4) == '8') {
+									// check down, down-right, right
+									if (!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.a, 7) ||
+										!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, 7) ||
+										!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, 8)) {
+										// check only
+										returnPlay.message = ReturnPlay.Message.CHECK;
+									} else {
+										// is checkmate
+										returnPlay.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+									}
+								} else if (move.charAt(4) == '1') {
+									// check up, up-right, right
+									if (!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.a, 2) ||
+										!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, 1) ||
+										!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, 2)) {
+										// check only
+										returnPlay.message = ReturnPlay.Message.CHECK;
+									} else {
+										// is checkmate
+										returnPlay.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+									}
+								} else {
+									// check the rest
+									if (!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.a, (int)(move.charAt(4) + 1)) ||
+										!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.a, (int)(move.charAt(4) - 1)) ||
+										!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, (int)(move.charAt(4) + 1)) ||
+										!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, (int)(move.charAt(4))) ||
+										!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, (int)(move.charAt(4) - 1))) {
+										// check only
+										returnPlay.message = ReturnPlay.Message.CHECK;
+									} else {
+										// is checkmate
+										returnPlay.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+									}
+								}
+							} else if (move.charAt(3) == 'h') {
+								if (move.charAt(4) == '8') {
+									// check down, down-left, left
+									if (!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.h, 7) ||
+										!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.g, 7) ||
+										!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.g, 8)) {
+										// check only
+										returnPlay.message = ReturnPlay.Message.CHECK;
+									} else {
+										// is checkmate
+										returnPlay.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+									}
+								} else if (move.charAt(4) == '1') {
+									// check up, up-left, left
+									if (!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.h, 2) ||
+										!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.g, 1) ||
+										!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.g, 2)) {
+										// check only
+										returnPlay.message = ReturnPlay.Message.CHECK;
+									} else {
+										// is checkmate
+										returnPlay.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+									}
+								} else {
+									// check the rest
+									if (!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.h, (int)(move.charAt(4) + 1)) ||
+										!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.h, (int)(move.charAt(4) - 1)) ||
+										!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.g, (int)(move.charAt(4) + 1)) ||
+										!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.g, (int)(move.charAt(4))) ||
+										!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.g, (int)(move.charAt(4) - 1))) {
+										// check only
+										returnPlay.message = ReturnPlay.Message.CHECK;
+									} else {
+										// is checkmate
+										returnPlay.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+									}
+								}
+							} else {
+								ReturnPiece.PieceFile left;
+								ReturnPiece.PieceFile middle;
+								ReturnPiece.PieceFile right;
+								if (move.charAt(3) == 'b') {
+									left = ReturnPiece.PieceFile.a;
+									middle = ReturnPiece.PieceFile.b;
+									right = ReturnPiece.PieceFile.c;
+								} else if (move.charAt(3) == 'c') {
+									left = ReturnPiece.PieceFile.b;
+									middle = ReturnPiece.PieceFile.c;
+									right = ReturnPiece.PieceFile.d;
+								} else if (move.charAt(3) == 'd') {
+									left = ReturnPiece.PieceFile.c;
+									middle = ReturnPiece.PieceFile.d;
+									right = ReturnPiece.PieceFile.e;
+								} else if (move.charAt(3) == 'e') {
+									left = ReturnPiece.PieceFile.d;
+									middle = ReturnPiece.PieceFile.e;
+									right = ReturnPiece.PieceFile.f;
+								} else if (move.charAt(3) == 'f') {
+									left = ReturnPiece.PieceFile.e;
+									middle = ReturnPiece.PieceFile.f;
+									right = ReturnPiece.PieceFile.g;
+								} else {
+									left = ReturnPiece.PieceFile.f;
+									middle = ReturnPiece.PieceFile.g;
+									right = ReturnPiece.PieceFile.h;
+								}
+								if (move.charAt(4) == '8') {
+									// check in a U shape
+									if (!isSquareUnderAttack(currPlayer, left, 8) ||
+										!isSquareUnderAttack(currPlayer, right, 8) ||
+										!isSquareUnderAttack(currPlayer, left, 7) ||
+										!isSquareUnderAttack(currPlayer, middle, 7) ||
+										!isSquareUnderAttack(currPlayer, right, 7)) {
+										// check only
+										returnPlay.message = ReturnPlay.Message.CHECK;
+									} else {
+										// is checkmate
+										returnPlay.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+									}
+								} else if (move.charAt(4) == '1') {
+									// check in an upside-down U shape
+									if (!isSquareUnderAttack(currPlayer, left, 1) ||
+										!isSquareUnderAttack(currPlayer, right, 1) ||
+										!isSquareUnderAttack(currPlayer, left, 2) ||
+										!isSquareUnderAttack(currPlayer, middle, 2) ||
+										!isSquareUnderAttack(currPlayer, right, 2)) {
+										// check only
+										returnPlay.message = ReturnPlay.Message.CHECK;
+									} else {
+										// is checkmate
+										returnPlay.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+									}
+								} else {
+									// check the rest
+									if (!isSquareUnderAttack(currPlayer, left, (int)(move.charAt(4) + 1)) ||
+										!isSquareUnderAttack(currPlayer, middle, (int)(move.charAt(4) + 1)) ||
+										!isSquareUnderAttack(currPlayer, right, (int)(move.charAt(4) + 1)) ||
+										!isSquareUnderAttack(currPlayer, left, (int)(move.charAt(4))) ||
+										!isSquareUnderAttack(currPlayer, right, (int)(move.charAt(4))) ||
+										!isSquareUnderAttack(currPlayer, left, (int)(move.charAt(4) - 1)) ||
+										!isSquareUnderAttack(currPlayer, middle, (int)(move.charAt(4) - 1)) ||
+										!isSquareUnderAttack(currPlayer, right, (int)(move.charAt(4) - 1))) {
+										// check only
+										returnPlay.message = ReturnPlay.Message.CHECK;
+									} else {
+										// is checkmate
+										returnPlay.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+									}
+								}
+							}
 						} else if (currPlayer == Player.black && piece.pieceType == ReturnPiece.PieceType.BK) {
-							//check for checkmate
-							//if (isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-							//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-							//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-							//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-							//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-							//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-							//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank) &&
-							//	isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank)) {
-							//	returnPlay.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
-							//} else {
-							//	//if not checkmate, it's check
-							//	returnPlay.message = ReturnPlay.Message.CHECK;
-							//}
+							if (isSquareUnderAttack(currPlayer, piece.pieceFile, piece.pieceRank)) {
+								//check for checkmate
+								if (move.charAt(3) == 'a') {
+									if (move.charAt(4) == '8') {
+										// check down, down-right, right
+										if (!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.a, 7) ||
+											!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, 7) ||
+											!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, 8)) {
+											// check only
+											returnPlay.message = ReturnPlay.Message.CHECK;
+										} else {
+											// is checkmate
+											returnPlay.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+										}
+									} else if (move.charAt(4) == '1') {
+										// check up, up-right, right
+										if (!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.a, 2) ||
+											!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, 1) ||
+											!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, 2)) {
+											// check only
+											returnPlay.message = ReturnPlay.Message.CHECK;
+										} else {
+											// is checkmate
+											returnPlay.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+										}
+									} else {
+										// check the rest
+										if (!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.a, (int)(move.charAt(4) + 1)) ||
+											!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.a, (int)(move.charAt(4) - 1)) ||
+											!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, (int)(move.charAt(4) + 1)) ||
+											!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, (int)(move.charAt(4))) ||
+											!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, (int)(move.charAt(4) - 1))) {
+											// check only
+											returnPlay.message = ReturnPlay.Message.CHECK;
+										} else {
+											// is checkmate
+											returnPlay.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+										}
+									}
+								 } else if (move.charAt(3) == 'a') {
+									if (move.charAt(4) == '8') {
+										// check down, down-right, right
+										if (!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.a, 7) ||
+											!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, 7) ||
+											!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, 8)) {
+											// check only
+											returnPlay.message = ReturnPlay.Message.CHECK;
+										} else {
+											// is checkmate
+											returnPlay.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+										}
+									} else if (move.charAt(4) == '1') {
+										// check up, up-right, right
+										if (!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.a, 2) ||
+											!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, 1) ||
+											!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, 2)) {
+											// check only
+											returnPlay.message = ReturnPlay.Message.CHECK;
+										} else {
+											// is checkmate
+											returnPlay.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+										}
+									} else {
+										// check the rest
+										if (!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.a, (int)(move.charAt(4) + 1)) ||
+											!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.a, (int)(move.charAt(4) - 1)) ||
+											!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, (int)(move.charAt(4) + 1)) ||
+											!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, (int)(move.charAt(4))) ||
+											!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.b, (int)(move.charAt(4) - 1))) {
+											// check only
+											returnPlay.message = ReturnPlay.Message.CHECK;
+										} else {
+											// is checkmate
+											returnPlay.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+										}
+									}
+								} else if (move.charAt(3) == 'h') {
+									if (move.charAt(4) == '8') {
+										// check down, down-left, left
+										if (!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.h, 7) ||
+											!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.g, 7) ||
+											!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.g, 8)) {
+											// check only
+											returnPlay.message = ReturnPlay.Message.CHECK;
+										} else {
+											// is checkmate
+											returnPlay.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+										}
+									} else if (move.charAt(4) == '1') {
+										// check up, up-left, left
+										if (!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.h, 2) ||
+											!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.g, 1) ||
+											!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.g, 2)) {
+											// check only
+											returnPlay.message = ReturnPlay.Message.CHECK;
+										} else {
+											// is checkmate
+											returnPlay.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+										}
+									} else {
+										// check the rest
+										if (!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.h, (int)(move.charAt(4) + 1)) ||
+											!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.h, (int)(move.charAt(4) - 1)) ||
+											!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.g, (int)(move.charAt(4) + 1)) ||
+											!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.g, (int)(move.charAt(4))) ||
+											!isSquareUnderAttack(currPlayer, ReturnPiece.PieceFile.g, (int)(move.charAt(4) - 1))) {
+											// check only
+											returnPlay.message = ReturnPlay.Message.CHECK;
+										} else {
+											// is checkmate
+											returnPlay.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+										}
+									}
+								} else {
+									ReturnPiece.PieceFile left;
+									ReturnPiece.PieceFile middle;
+									ReturnPiece.PieceFile right;
+									if (move.charAt(3) == 'b') {
+										left = ReturnPiece.PieceFile.a;
+										middle = ReturnPiece.PieceFile.b;
+										right = ReturnPiece.PieceFile.c;
+									} else if (move.charAt(3) == 'c') {
+										left = ReturnPiece.PieceFile.b;
+										middle = ReturnPiece.PieceFile.c;
+										right = ReturnPiece.PieceFile.d;
+									} else if (move.charAt(3) == 'd') {
+										left = ReturnPiece.PieceFile.c;
+										middle = ReturnPiece.PieceFile.d;
+										right = ReturnPiece.PieceFile.e;
+									} else if (move.charAt(3) == 'e') {
+										left = ReturnPiece.PieceFile.d;
+										middle = ReturnPiece.PieceFile.e;
+										right = ReturnPiece.PieceFile.f;
+									} else if (move.charAt(3) == 'f') {
+										left = ReturnPiece.PieceFile.e;
+										middle = ReturnPiece.PieceFile.f;
+										right = ReturnPiece.PieceFile.g;
+									} else {
+										left = ReturnPiece.PieceFile.f;
+										middle = ReturnPiece.PieceFile.g;
+										right = ReturnPiece.PieceFile.h;
+									}
+									if (move.charAt(4) == '8') {
+										// check in a U shape
+										if (!isSquareUnderAttack(currPlayer, left, 8) ||
+											!isSquareUnderAttack(currPlayer, right, 8) ||
+											!isSquareUnderAttack(currPlayer, left, 7) ||
+											!isSquareUnderAttack(currPlayer, middle, 7) ||
+											!isSquareUnderAttack(currPlayer, right, 7)) {
+											// check only
+											returnPlay.message = ReturnPlay.Message.CHECK;
+										} else {
+											// is checkmate
+											returnPlay.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+										}
+									} else if (move.charAt(4) == '1') {
+										// check in an upside-down U shape
+										if (!isSquareUnderAttack(currPlayer, left, 1) ||
+											!isSquareUnderAttack(currPlayer, right, 1) ||
+											!isSquareUnderAttack(currPlayer, left, 2) ||
+											!isSquareUnderAttack(currPlayer, middle, 2) ||
+											!isSquareUnderAttack(currPlayer, right, 2)) {
+											// check only
+											returnPlay.message = ReturnPlay.Message.CHECK;
+										} else {
+											// is checkmate
+											returnPlay.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+										}
+									} else {
+										// check the rest
+										if (!isSquareUnderAttack(currPlayer, left, (int)(move.charAt(4) + 1)) ||
+											!isSquareUnderAttack(currPlayer, middle, (int)(move.charAt(4) + 1)) ||
+											!isSquareUnderAttack(currPlayer, right, (int)(move.charAt(4) + 1)) ||
+											!isSquareUnderAttack(currPlayer, left, (int)(move.charAt(4))) ||
+											!isSquareUnderAttack(currPlayer, right, (int)(move.charAt(4))) ||
+											!isSquareUnderAttack(currPlayer, left, (int)(move.charAt(4) - 1)) ||
+											!isSquareUnderAttack(currPlayer, middle, (int)(move.charAt(4) - 1)) ||
+											!isSquareUnderAttack(currPlayer, right, (int)(move.charAt(4) - 1))) {
+											// check only
+											returnPlay.message = ReturnPlay.Message.CHECK;
+										} else {
+											// is checkmate
+											returnPlay.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+										}
+									}
+								}
+							}
 						}
 					}
 				}
