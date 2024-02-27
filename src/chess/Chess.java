@@ -676,6 +676,8 @@ public class Chess {
 
 		if (parts.length == 3 && parts[2].equals("draw?")) {
 			returnPlay.message = ReturnPlay.Message.DRAW;
+			start();
+			return returnPlay;
 		}
 		
 		return returnPlay;
@@ -695,7 +697,7 @@ public class Chess {
 		lastPawnRank = -1;
 		lastMoveWasDoublePawnStep = false;
 		// print board
-		PlayChess.printBoard(initPieces);
+		//PlayChess.printBoard(initPieces);
 
 	}
 

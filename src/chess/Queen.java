@@ -56,7 +56,7 @@ public class Queen {
             if (piece.pieceFile == file && piece.pieceRank == rank) {
                 boolean isOpponentPiece = (isWhite && piece.pieceType.toString().startsWith("B")) || (!isWhite && piece.pieceType.toString().startsWith("W"));
                 // Debug output to check if an opponent piece is detected correctly
-                System.out.println("Checking opponent piece at " + file + rank + ": " + isOpponentPiece);
+                //System.out.println("Checking opponent piece at " + file + rank + ": " + isOpponentPiece);
                 return isOpponentPiece;
             }
         }
